@@ -1,0 +1,125 @@
+{
+    "members": [
+    {
+      "memberID": "MEM-2026-001",
+      "controlNumber": "COP-2026-1001",
+      "name": { "first": "Juan", "middle": "Santos", "last": "Dela Cruz" },
+      "basicInfo": { "gender": "Male", "birthdate": "1988-04-15", "civilStatus": "Married", "nationality": "Filipino" },
+      "contacts": { "num": "+639123456789", "email": "juan.delacruz@email.com", "addr": "Brgy. San Jose, Dasmariñas, Cavite" },
+      "initialPaymentAmount": 1000,
+      "income": { "annual": 180000, "monthly": 15000 },
+      "memberStatus": "Active",
+      "memberType": "Associate",
+      "sharedCapital": 5000, 
+      "createdAt": "2026-01-10T10:00:00.000Z"
+    },
+    {
+      "memberID": "MEM-2026-002",
+      "controlNumber": "COP-2026-1002",
+      "name": { "first": "Maria", "middle": "Reyes", "last": "Santos" },
+      "basicInfo": { "gender": "Female", "birthdate": "1992-08-02", "civilStatus": "Single", "nationality": "Filipino" },
+      "contacts": { "num": "+639987654321", "email": "maria.santos@email.com", "addr": "Brgy. Malinta, Silang, Cavite" },
+      "initialPaymentAmount": 3000,
+      "income": { "annual": 360000, "monthly": 30000 },
+      "memberStatus": "Active",
+      "memberType": "Regular",
+      "sharedCapital": 15000,
+      "createdAt": "2026-02-01T09:30:00.000Z"
+    }
+  ],
+  "farms": [
+    {
+      "farmID": "FARM-001",
+      "memberID": "MEM-2026-001",
+      "farmLocation": "14.3294° N, 120.9367° E",
+      "farmAreaSqM": 5000,
+      "barangay": "San Jose",
+      "municipality": "Dasmariñas",
+      "province": "Cavite",
+      "ownership": "Titled (TCT)",
+      "tenureStatus": "Owner",
+      "commodities": "Rice, Corn",
+      "assets": "Hand Tractor, Irrigation Pump",
+      "income": { "annual": 120000, "monthly": 10000 }
+    }
+  ],
+  "loanRequests": [
+    {
+      "loanID": "LN-2026-001",
+      "memberID": "MEM-2026-002",
+      "name": "Maria Santos",
+      "loanAmount": 30000,
+      "loanStatus": "Pending",
+      "requestApproval": false,
+      "monthlyPayment": 5000,
+      "assignedOfficer": "Officer",
+      "officerID": "OFF-005"
+    }
+  ],
+  "transactionRecords": [
+    {
+      "transactionID": "TXN-2026-0001",
+      "memberID": "MEM-2026-001",
+      "name": "Juan Dela Cruz",
+      "memberStatus": "Active",
+      "paymentType": "Initial Payment",
+      "monthlyPayment": 50,
+      "loanStatus": "None",
+      "paymentAmount": 1000,
+      "date": "2026-01-15",
+      "assignedOfficer": "Officer",
+      "officerID": "OFF-005"
+    },
+    {
+      "transactionID": "TXN-2026-0002",
+      "memberID": "MEM-2026-001",
+      "name": "Juan Dela Cruz",
+      "memberStatus": "Active",
+      "paymentType": "Monthly Payment",
+      "monthlyPayment": 50,
+      "loanStatus": "None",
+      "paymentAmount": 50,
+      "date": "2026-02-15",
+      "assignedOfficer": "Officer",
+      "officerID": "OFF-005"
+    }
+  ],
+  "userAccounts": [
+    {
+      "userID": "USR-001",
+      "userLevel": "Admin",
+      "name": "System Administrator",
+      "email": "admin@coop.com",
+      "username": "admin",
+      "password": "admin",
+      "officerID": "N/A"
+    },
+    {
+      "userID": "USR-002",
+      "userLevel": "Officer",
+      "name": "John Cruz",
+      "email": "officer@coop.com",
+      "username": "officer",
+      "password": "officer",
+      "officerID": "OFF-005"
+    },
+    {
+      "userID": "USR-003",
+      "userLevel": "Secretary",
+      "name": "Secretary",
+      "email": "secretary@coop.com",
+      "username": "secretary",
+      "password": "secretary",
+      "officerID": "OFF-005"
+    },
+        {
+      "userID": "USR-004",
+      "userLevel": "Cashier",
+      "name": "Cashier",
+      "email": "cashier@coop.com",
+      "username": "cashier",
+      "password": "cashier",
+      "officerID": "OFF-005"
+    }
+  ]
+}
