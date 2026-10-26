@@ -1,0 +1,48 @@
+/* Custom Role-Based Accents */
+body {
+  font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+}
+
+.text-purple {
+  color: #6f42c1;
+}
+
+.card {
+  border-radius: 8px;
+}
+
+/* Helper to transition smooth visibility */
+.role-section {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cashier vertical tabs */
+#cashierTabs .nav-link {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+}
+#cashierTabs .nav-link.active {
+  background-color: #0dcaf0; /* bright cyan to match your theme */
+  color: #0a0a0a;
+  font-weight: 600;
+}
+
+/* Cashier vertical tabs */
+#officerTabs .nav-link {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+}
+#officerTabs .nav-link.active {
+  background-color: #0dcaf0; /* bright cyan to match your theme */
+  color: #0a0a0a;
+  font-weight: 600;
+}

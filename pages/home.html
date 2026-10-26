@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cooperative App - Management Dashboard</title>
+  <!-- Bootstrap 5 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar & Role Switcher Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">Cooperative Members Profiling and Payment Tracking System</a>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 mb-4">
+  
+        <div class="ms-auto">
+          <!-- Log Out Button -->
+          <br><button id="logoutBtn" class="btn btn-outline-light btn-sm">Log Out</button>
+        </div>
+      </nav>
+    </div>
+  </nav>
+
+  <div class="container my-4">
+
+    <!-- ================= OFFICER VIEW ================= -->
+    <section id="officerSection" class="role-section d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="text-primary">Officer Portal</h3>
+        <span class="badge bg-warning text-dark">Role: Officer</span>
+      </div>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <!-- LEFT: Vertical nav (tabs) -->
+            <div class="col-md-3">
+              <div class="nav flex-column nav-pills me-3" id="officerTabs" role="tablist" aria-orientation="vertical">
+                <button class="nav-link active" id="tab-member-management" data-bs-toggle="pill" data-bs-target="#memberManagementTab" type="button" role="tab" aria-controls="memberManagementTab" aria-selected="true">
+                  Member Management
+                </button>
+                <button class="nav-link" id="tab-farm-registration" data-bs-toggle="pill" data-bs-target="#farmRegistrationTab" type="button" role="tab" aria-controls="farmRegistrationTab" aria-selected="false">
+                  Farm Registration
+                </button>
+
+                <button class="nav-link" id="tab-transcript-records" data-bs-toggle="pill" data-bs-target="#transcriptRecordsTab" type="button" role="tab" aria-controls="transcriptRecordsTab" aria-selected="false">
+                  Transcript Records
+                </button>
+
+
+              </div>
+            </div>
+
+            <!-- RIGHT: Tab content -->
+            <div class="col-md-9">
+              <div class="tab-content" id="officerTabContent">
+                
+                <!-- TAB 1: Member Management (Registration + Members Table) -->
+                <div class="tab-pane fade show active" id="memberManagementTab" role="tabpanel" aria-labelledby="tab-member-management">
+                  
+                  <!-- Member Registration Form Card -->
+                  <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-primary text-white font-weight-bold">
+                      Member Registration
+                    </div>
+                    <div class="card-body">
+                      <form id="memberRegistrationForm">
+                        <div class="row g-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Control Number (CoopID)</label>
+                            <input type="text" class="form-required form-control" id="controlNumber" required readonly placeholder="auto-generated">
+                          </div>
+
+                          <div class="col-md-4">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" required>
+                          </div>
+
+                          <div class="col-md-4">
+                            <label class="form-label">Middle Name</label>
+                            <input type="text" class="form-control" id="middleName">
+                          </div>
+
+                          <div class="col-md-4">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" required>
+                          </div>
+
+                          <div class="col-md-3">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" id="memberGender" required>
+                              <option value="">Select</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Other">Other</option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-3">
+                            <label class="form-label">Birthdate</label>
+                            <input type="date" class="form-control" id="memberBirthdate" required>
+                          </div>
+
+                          <div class="col-md-3">
+                            <label class="form-label">Civil Status</label>
+                            <select class="form-select" id="memberCivilStatus" required>
+                              <option value="">Select</option>
+                              <option value="Single">Single</option>
+                              <option value="Married">Married</option>
+                              <option value="Separated">Separated</option>
+                              <option value="Widowed">Widowed</option>
+                            </select>
+                          </div>
+
+                          <div class="col-md-3">
+                            <label class="form-label">Nationality</label>
+                            <input type="text" class="form-control" id="memberNationality" placeholder="e.g. Filipino" required>
+                          </div>
+
+                          <div class="col-md-6">
+                            <label class="form-label">Contact Number</label>
+                            <input type="tel" class="form-control" id="memberContact" required>
+                          </div>
+
+                          <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="memberEmail" required>
+                          </div>
+
+                          <div class="col-12">
+                            <label class="form-label">Address</label>
+                            <textarea id="memberAddress" class="form-control" rows="2" placeholder="Street, Barangay, Municipality, Province, Postal Code" required></textarea>
+                          </div>
+
+                          <div class="col-md-6">
+                            <label class="form-label">Initial Payment Amount (₱)</label>
+                            <input type="number" class="form-control" id="initialPayment" value="1000" readonly>
+                          </div>
+
+                          <div class="col-md-6">
+                            <label class="form-label">Monthly Income (₱)</label>
+                            <input type="number" class="form-control" id="monthlyIncome" required>
+                          </div>
+
+                          <div class="col-md-6">
+                            <label class="form-label">Member Type</label>
+                            <select class="form-select" id="memberTypeSelect" required>
+                              <option value="Associate" selected>Associate (₱1,000 Initial Fee)</option>
+                              <option value="Regular">Regular (₱3,000 Initial Fee)</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                           <button type="submit" class="btn btn-primary mt-3 w-45">Submit Registration for Approval</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <!-- Local Members View Table -->
+                  <div class="card shadow-sm border-0">
+                    <div class="card-header bg-secondary text-white">Members</div> 
+                    <!-- Local Storage -->
+                    <div class="card-body p-0">
+                      <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                          <thead class="table-light">
+                            <tr>
+                              <th class="text-center">Member ID</th>
+                              <th class="text-center">Name</th>
+                              <th class="text-center">Status</th>
+                              <th class="text-center">Type</th>
+                              <th class="text-center">Shared Capital</th>
+                              <th class="text-center">Contact</th>
+                              <th class="text-center">Joined</th>
+                              <!-- <th class="text-center">Action</th> -->
+                            </tr>
+                          </thead>
+                          <tbody id="officerMembersTbody"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- TAB 2: Farm Registration -->
+                <div class="tab-pane fade" id="farmRegistrationTab" role="tabpanel" aria-labelledby="tab-farm-registration">
+                  <div class="card shadow-sm border-0">
+                    <div class="card-header bg-dark text-white">
+                      Farm Registration
+                    </div>
+                    <div class="card-body">
+                      <form id="farmRegistrationForm">
+                        <div class="mb-2">
+                          <label class="form-label">Farm ID</label>
+                          <input type="text" class="form-control" id="farmId" readonly placeholder="Auto-generated">
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="farmMemberId" class="form-label">Member ID</label>
+                          <select id="farmMemberId" class="form-select" required>
+                            <option value="">Select member</option>
+                            <!-- options appended dynamically -->
+                          </select>
+                        </div>
+
+                        <div class="row g-2">
+                          <div class="col-md-6 mb-2">
+                            <label class="form-label">Farm Coordinates</label>
+                            <input type="text" class="form-control" id="farmCoordinates" placeholder="e.g. 14.5547, 121.0244">
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label class="form-label">Area (SqM)</label>
+                            <input type="number" class="form-control" id="farmArea" placeholder="e.g. 5000">
+                          </div>
+                        </div>
+
+                        <div class="row g-2">
+                          <div class="col-md-4 mb-2">
+                            <label class="form-label">Barangay</label>
+                            <input type="text" class="form-control" id="farmBarangay" placeholder="Barangay">
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label class="form-label">Municipality</label>
+                            <input type="text" class="form-control" id="farmMunicipality" placeholder="Municipality">
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label class="form-label">Province</label>
+                            <input type="text" class="form-control" id="farmProvince" placeholder="Province">
+                          </div>
+                        </div>
+
+                        <div class="row g-2">
+                          <div class="col-md-6 mb-2">
+                            <label class="form-label">Ownership Type</label>
+                            <select id="farmOwnershipType" class="form-select">
+                              <option value="Owned">Owned</option>
+                              <option value="Leased">Leased</option>
+                              <option value="Shared">Shared</option>
+                              <option value="Other">Other</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label class="form-label">Tenure Status</label>
+                            <select id="farmTenureStatus" class="form-select">
+                              <option value="Registered">Registered</option>
+                              <option value="Unregistered">Unregistered</option>
+                              <option value="UnderDispute">Under Dispute</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="mb-2">
+                          <label class="form-label">Commodities / Main Crops</label>
+                          <input type="text" class="form-control" id="farmCommodities" placeholder="Rice, Corn, etc. (comma separated)">
+                        </div>
+                    
+                        <div class="mb-2">
+                          <label class="form-label">Assets & Equipment (comma separated)</label>
+                          <input type="text" class="form-control" id="farmAssets" placeholder="Tractor, Pump, Silo">
+                        </div>
+
+                        <div class="row g-2">
+                          <div class="col-md-6 mb-2">
+                            <label class="form-label">Farm Monthly Income (₱)</label>
+                            <input type="number" class="form-control" id="farmMonthlyIncome" placeholder="e.g. 10000">
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label class="form-label">Farm Annual Income (₱)</label>
+                            <input type="number" class="form-control" id="farmAnnualIncome" placeholder="e.g. 120000">
+                          </div>
+                        </div>   
+                        <div class="d-flex justify-content-center">
+                           <button type="submit" class="btn btn-outline-dark mt-2 w-45">Register Farm</button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                  <div class="card shadow-sm border-0">
+                  <div class="card-header bg-secondary text-white">Registered Farms List</div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table table-hover align-middle mb-0" id="farmsListTable">
+                        <thead class="table-light">
+                          <tr>
+                            <th>Farm ID</th>
+                            <th>Member ID</th>
+                            <th>Coordinates</th>
+                            <th>Area (SqM)</th>
+                            <th>Location</th>
+                            <th>Commodities</th>
+                            <th>Assets</th>
+                            <th>Ownership</th>
+                            <th>Tenure</th>
+                            <th>Monthly Income</th>
+                            <th>Created</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- JavaScript will dynamically populate rows here -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>      
+                </div>
+
+                
+
+                  
+              </div>
+                              <!-- TAB 3: Transcript Records (NEW) -->
+                <div class="tab-pane fade" id="transcriptRecordsTab" role="tabpanel" aria-labelledby="tab-transcript-records">
+                  <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-primary text-white">
+                      Member Transcript Records
+                    </div>
+                    <div class="card-body">
+                      <!-- Member Name Filter Selection -->
+                      <div class="mb-3">
+                        <label for="transcriptMemberSelect" class="form-label fw-bold">Select Member Name</label>
+                        <select id="transcriptMemberSelect" class="form-select">
+                          <option value="">-- Choose a member --</option>
+                          <!-- Populated dynamically via JS -->
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Records Table / View Card -->
+                  <div class="card shadow-sm border-0">
+                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                      <span>Transaction & Activity History</span>
+                      
+                    <div>
+                    <span id="transcriptMemberMeta" class="badge bg-light text-dark me-2">No member selected</span>
+                    <button id="downloadTranscriptBtn" class="btn btn-sm btn-light text-dark fw-bold" disabled>
+                      <i class="bi bi-download"></i> Download Report
+                    </button>
+                  </div>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="transcriptRecordsTable">
+                          <thead class="table-light">
+                            <tr>
+                              <th>Date / Time</th>
+                              <th>Record Type</th>
+                              <th>Details / Reference</th>
+                              <th class="text-end">Amount (₱)</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody id="transcriptRecordsTbody">
+                            <tr>
+                              <td colspan="5" class="text-center text-muted py-4">Please select a member name above to view transcript records.</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>     
+            </div>
+          </div> <!-- row -->
+        </div> <!-- card-body -->
+      </div> <!-- card -->
+    </section>
+
+    <!-- ================= SECRETARY VIEW ================= -->
+    <section id="secretarySection" class="role-section d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="text-success">Secretary Approval Dashboard</h3>
+        <span class="badge bg-success">Role: Secretary</span>
+      </div>
+
+      <!-- Pending Registrations Queue -->
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-success text-white">Pending Registration Approvals</div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Coop ID</th>
+                  <th>Applicant Name</th>
+                  <th>Type</th>
+                  <th>Initial Pay</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="pendingRegistrationsTbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Pending Loan Requests -->
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-success text-white">Pending Loan Requests</div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Loan ID</th>
+                  <th>Member</th>
+                  <th>Type</th>
+                  <th>Capital</th>
+                  <th>Requested Amount</th>
+                  <th>Term</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="pendingLoanRequestsTbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 transactions-container"></div>
+
+
+
+
+      
+    </section>
+
+    <!-- ================= CASHIER VIEW ================= -->
+<section id="cashierSection" class="role-section d-none">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="text-info text-dark">Cashier Portal</h3>
+    <span class="badge bg-info text-dark">Role: Cashier</span>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-3">
+      <div class="row">
+        <!-- LEFT: Vertical nav (tabs) -->
+        <div class="col-md-3">
+          <div class="nav flex-column nav-pills me-3" id="cashierTabs" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active" id="tab-process-payment" data-bs-toggle="pill" data-bs-target="#processPaymentTab" type="button" role="tab" aria-controls="processPaymentTab" aria-selected="true">
+              Process Payment
+            </button>
+            <button class="nav-link" id="tab-loan-calculator" data-bs-toggle="pill" data-bs-target="#loanCalculatorTab" type="button" role="tab" aria-controls="loanCalculatorTab" aria-selected="false">
+              Create Loan Request
+            </button>
+            <!-- Add more tabs later (e.g., Reports) -->
+          </div>
+        </div>
+
+        <!-- RIGHT: Tab content -->
+        <div class="col-md-9">
+          <div class="tab-content" id="cashierTabContent">
+            <!-- Process Payment Tab Pane -->
+            <div class="tab-pane fade show active" id="processPaymentTab" role="tabpanel" aria-labelledby="tab-process-payment">
+              <div class="card shadow-sm border-0">
+                <div class="card-header bg-info text-dark font-weight-bold">
+                  Process Payment
+                </div>
+                <div class="card-body">
+                  <form id="paymentForm">
+                    <div class="mb-3"> <label class="form-label">Member</label>
+                       <select class="form-select" id="paymentMemberId" required>
+                         <option value="">Select member</option> 
+                       </select> 
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Payment Type</label>
+                      <select class="form-select" id="paymentTypeSelect">
+                        <option value="Monthly">Monthly Payment (₱50)</option>
+                        <option value="Initial">Initial Membership Payment</option>
+                        <option value="Loan">Loan Payment</option>
+                        <option value="Regular">Regular Payment</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Amount Paid (₱)</label>
+                      <input type="number" id="paymentAmount" class="form-control" value="50" required>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <button id="recordPaymentBtn" type="submit" class="btn btn-info text-dark w-25">Record Payment</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+         
+
+
+            <!-- Loan Calculator / Request Tab Pane -->
+            <div class="tab-pane fade" id="loanCalculatorTab" role="tabpanel" aria-labelledby="tab-loan-calculator">
+              <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white">
+                  Create Loan Request (Loan Calculator)
+                </div>
+                <div class="card-body">
+                  <form id="loanRequestForm" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                      <div class="col-12">
+                        <label class="form-label">Member</label>
+                        <select id="loanMemberSelect" class="form-select" required>
+                          <option value="">Select member</option>
+                          <!-- JS populates options -->
+                        </select>
+                        <div class="invalid-feedback">Please select a member.</div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label">Member Type</label>
+                        <select class="form-select" id="loanMemberType" required>
+                          <option value="associate">Associate (Max 2x Shared Capital)</option>
+                          <option value="regular">Regular (Max 3x Shared Capital)</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label">Current Shared Capital (₱)</label>
+                        <input type="number" class="form-control" id="sharedCapital" readonly>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label">Requested Amount (₱)</label>
+                        <input type="number" class="form-control" id="requestedLoanAmount" required min="0" step="100">
+                        <div class="invalid-feedback" id="requestedAmountFeedback">Enter a valid requested amount.</div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label">Loan Duration</label>
+                        <select class="form-select" id="loanDuration" required>
+                          <option value=3>3 Months</option>
+                          <option value=6>6 Months</option>
+                          <option value=12>12 Months</option>
+                        </select>
+                      </div>
+
+
+                      <div class="col-md-6">
+                        <label class="form-label">Calculated Max Limit (₱)</label>
+                        <input type="text" class="form-control font-weight-bold bg-light" id="maxLoanLimit" readonly>
+                      </div>
+                    </div>
+
+                    <div class="alert alert-secondary mt-3 mb-0 py-2 small">
+                      <strong>Policy Reminder:</strong> Associate = 2x shared capital, Regular = 3x shared capital. Interest and penalties apply.
+                    </div>
+                    
+
+                    <div class="mt-3 d-flex justify-content-center">
+                      <button type="submit" id="createLoanBtn" class="btn btn-dark w-25">Request Loan</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 transactions-container"></div>
+
+
+          </div>
+        </div>
+      </div> <!-- row -->
+    </div> <!-- card-body -->
+  </div> <!-- card -->
+</section>
+
+    <!-- ================= ADMIN VIEW ================= -->
+    <section id="adminSection" class="role-section d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="text-purple">User Access</h3>
+        <span class="badge bg-dark">Role: Admin</span>
+      </div>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+          <span>System Accounts Management</span>
+          <button id="addUserBtn" class="btn btn-sm btn-light">+ Add User/Officer</button>
+        </div>
+
+        <!-- modal for Adding User/Officer -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <form id="addUserForm" novalidate>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addUserModalLabel">Add User / Officer</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                  <div class="mb-2">
+                    <label for="userId" class="form-label">User ID (optional)</label>
+                    <input type="text" class="form-control" id="userId" placeholder="USR-001">
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" required>
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="roleLevel" class="form-label">Role Level</label>
+                    <select id="roleLevel" class="form-select" required>
+                      <option value="Admin">Admin</option>
+                      <option value="Officer" selected>Officer</option>
+                      <option value="Secretary">Secretary</option>
+                      <option value="Cashier">Cashier</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Add User</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Edit User Modal -->
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <form id="editUserForm" novalidate>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                  <input type="hidden" id="editRowIndex" name="editRowIndex">
+                  <input type="hidden" id="editUserInternalId" name="editUserInternalId">
+
+                  <div class="mb-2">
+                    <label for="editUserId" class="form-label">User ID</label>
+                    <input type="text" class="form-control" id="editUserId" name="editUserId" readonly>
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="editFullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="editFullName" name="editFullName" required>
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="editUsername" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="editUsername" name="editUsername" required>
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="editRoleLevel" class="form-label">Role Level</label>
+                    <select id="editRoleLevel" name="editRoleLevel" class="form-select" required>
+                      <option value="Admin">Admin</option>
+                      <option value="Officer">Officer</option>
+                      <option value="Secretary">Secretary</option>
+                      <option value="Cashier">Cashier</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="editPassword" class="form-label">Password (leave blank to keep current)</label>
+                    <input type="password" class="form-control" id="editPassword" name="editPassword" placeholder="•••••• (optional)">
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Confirmation Modal (add near other modals) -->
+        <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="mb-2">Are you sure you want to delete the following user?</p>
+                <ul class="list-unstyled small mb-0">
+                  <li><strong id="deleteUserName">Full Name</strong></li>
+                  <li class="text-muted" id="deleteUserIdentifier">USR-001 · username</li>
+                </ul>
+                <div id="deleteErrorMsg" class="text-danger small mt-2 d-none"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button id="confirmDeleteUserBtn" type="button" class="btn btn-danger btn-sm">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="card-body p-0">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Role Level</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsersTbody">
+              <!-- rows will be rendered from mockdata by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+      <div class="modal fade" id="loanActionResultModal" tabindex="-1" aria-labelledby="loanActionResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body text-center py-4">
+              <div id="loanActionResultIcon" style="font-size:32px; margin-bottom:8px;"></div>
+              <div id="loanActionResultMessage" class="fw-semibold"></div>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approve Confirmation Modal -->
+      <div class="modal fade" id="approveRegistrationModal" tabindex="-1" aria-labelledby="approveRegistrationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="approveRegistrationModalLabel">Confirm Approve</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to approve this registration?</p>
+              <ul class="list-unstyled">
+                <li><strong id="approveCoopId">Coop ID</strong></li>
+                <li class="text-muted" id="approveName">Full Name</li>
+              </ul>
+              <div id="approveError" class="text-danger small d-none"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+              <button id="confirmApproveBtn" type="button" class="btn btn-success btn-sm">Confirm Approve</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reject Confirmation Modal -->
+      <div class="modal fade" id="rejectRegistrationModal" tabindex="-1" aria-labelledby="rejectRegistrationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <form id="rejectRegistrationForm" novalidate>
+              <div class="modal-header">
+                <h5 class="modal-title" id="rejectRegistrationModalLabel">Confirm Reject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to reject this registration?</p>
+                <ul class="list-unstyled">
+                  <li><strong id="rejectCoopId">Coop ID</strong></li>
+                  <li class="text-muted" id="rejectName">Full Name</li>
+                </ul>
+               </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button id="confirmRejectBtn" type="submit" class="btn btn-danger btn-sm">Confirm Reject</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Result Modal (Approved / Rejected success) -->
+      <div class="modal fade" id="actionResultModal" tabindex="-1" aria-labelledby="actionResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body text-center py-4">
+              <div id="actionResultIcon" style="font-size:32px; margin-bottom:8px;"></div>
+              <div id="actionResultMessage" class="fw-semibold"></div>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Approve Loan Confirmation Modal -->
+      <div class="modal fade" id="approveLoanModal" tabindex="-1" aria-labelledby="approveLoanModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="approveLoanModalLabel">Confirm Loan Approval</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to approve this loan request?</p>
+              <ul class="list-unstyled mb-0">
+                <li><strong id="approveLoanId">Loan ID</strong></li>
+                <li class="text-muted" id="approveLoanMember">Member</li>
+                <li class="text-muted" id="approveLoanAmount">Amount</li>
+              </ul>
+              <div id="approveLoanError" class="text-danger small d-none mt-2"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+              <button id="confirmApproveLoanBtn" type="button" class="btn btn-success btn-sm">Confirm Approve</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reject Loan Confirmation Modal -->
+      <div class="modal fade" id="rejectLoanModal" tabindex="-1" aria-labelledby="rejectLoanModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="rejectLoanModalLabel">Confirm Loan Rejection</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+Are you sure you want to reject this loan request              <p>?</p>
+              <ul class="list-unstyled mb-0">
+                <li><strong id="rejectLoanId">Loan ID</strong></li>
+                <li class="text-muted" id="rejectLoanMember">Member</li>
+                <li class="text-muted" id="rejectLoanAmount">Amount</li>
+              </ul>
+              <div id="rejectLoanError" class="text-danger small d-none mt-2"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+              <button id="confirmRejectLoanBtn" type="button" class="btn btn-danger btn-sm">Confirm Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+  <!-- modal loan request -->
+     <div class="modal fade"
+       id="loanActionResultModal"
+       tabindex="-1"
+       aria-labelledby="loanActionResultTitle"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loanActionResultTitle">
+            Loan Request Result
+          </h5>
+          <button type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div id="loanActionResultIcon"></div>
+          <p id="loanActionResultMessage"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App Custom Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
